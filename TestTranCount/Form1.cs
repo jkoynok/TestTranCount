@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Transactions;
+using System.Threading;
 
 namespace TestTranCount
 {
@@ -20,6 +22,13 @@ namespace TestTranCount
 
         private void button1_Click(object sender, EventArgs ev)
         {
+         for (int i = 0; i< 10; i++) {
+             System.Threading.ThreadPool.QueueUserWorkItem(new WaitCallback(DoWork,null));
+            }
+        }
+
+        public static void DoWork()
+        {
             try
             {
                 Boolean continueProcessing = true;
@@ -29,9 +38,8 @@ namespace TestTranCount
                 int originalSQLTimeout = 0;
                 int newSQLTimeout = 0;
 
-                using (var db  = new DataClasses1DataContext())
+                using (var db = new DataClasses1DataContext())
                 {
-                    db.Connection.Open();
 
                     originalSQLTimeout = db.CommandTimeout;
                     newSQLTimeout = originalSQLTimeout;
@@ -41,42 +49,43 @@ namespace TestTranCount
                         //Retry logic
                         while (continueProcessing == true)
                         {
-                            db.Transaction = db.Connection.BeginTransaction();
-                            db.CommandTimeout = newSQLTimeout;
-                     
-                            try
+                            using (var ts = new TransactionScope())
                             {
-                                db.TestTranCount();
-                                db.Transaction.Commit();
-                                continueProcessing = false;
-                            }
-                            catch (System.Data.SqlClient.SqlException e)
-                            {
-                                retryCount = retryCount + 1;
-                                System.Diagnostics.Debug.WriteLine(e.Message);
-                                //increase the timeout for the next retry
-                                newSQLTimeout = db.CommandTimeout + Convert.ToInt16(db.CommandTimeout * timeOutFactor);
-                                db.Transaction.Rollback();
-                                if (retryCount >= sqlMaxRetryLimit)
+                                db.CommandTimeout = newSQLTimeout;
+
+                                try
                                 {
-                                    throw new Exception(e.Message);
+                                    db.TestTranCount();
+                                    ts.Complete();
+                                    continueProcessing = false;
                                 }
-                            }
-                            finally
-                            {
-                                db.Transaction = null;
+                                catch (System.Data.SqlClient.SqlException e)
+                                {
+                                    retryCount = retryCount + 1;
+                                    System.Diagnostics.Debug.WriteLine(e.Message);
+                                    //increase the timeout for the next retry
+                                    newSQLTimeout = db.CommandTimeout + Convert.ToInt16(db.CommandTimeout * timeOutFactor);
+                                    if (retryCount >= sqlMaxRetryLimit)
+                                    {
+                                        throw new Exception(e.Message);
+                                    }
+                                }
+
                             }
                         }
                     }
                 }
             }
 
-           catch (Exception x)
+            catch (Exception x)
             {
                 throw x;
             }
         }
+
         }
+
+
     
 
 }
