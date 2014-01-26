@@ -1,0 +1,9 @@
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\bin\Debug\TestTranCount.exe.config
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\obj\Debug\TestTranCount.csprojResolveAssemblyReference.cache
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\obj\Debug\TestTranCount.Form1.resources
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\obj\Debug\TestTranCount.Properties.Resources.resources
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\obj\Debug\TestTranCount.csproj.GenerateResource.Cache
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\bin\Debug\TestTranCount.exe
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\bin\Debug\TestTranCount.pdb
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\obj\Debug\TestTranCount.exe
+c:\users\jkoynok\documents\visual studio 2012\Projects\TestTranCount\TestTranCount\obj\Debug\TestTranCount.pdb

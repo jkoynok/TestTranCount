@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="orchard" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=jon7a;Initial Catalog=orchard;Integrated Security=True" SettingsObjectName="TestTranCount.Properties.Settings" SettingsPropertyName="orchardConnectionString" Provider="System.Data.SqlClient" />
+  <Function Name="dbo.TestTranCount" Method="TestTranCount">
+    <ElementType Name="TestTranCountResult">
+      <Column Name="" Member="Column1" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>
